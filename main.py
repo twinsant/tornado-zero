@@ -10,8 +10,10 @@ from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
 from local_conf import DEFAULT_PORT
+from handlers.base import IndexHandler
 
 handlers = [
+    URLSpec('/', IndexHandler, name='index'),
 ]
 
 settings = dict(
