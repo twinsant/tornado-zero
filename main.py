@@ -1,21 +1,30 @@
-import os
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0, parentdir) 
+import logging
 
-import tornado.ioloop
-import tornado.web
+from tornado.options import define
+from tornado.options import options
+from tornado.options import parse_command_line
+from tornado.web import Application
+from tornado.web import URLSpec
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
 
-import settings
+from local_conf import DEFAULT_PORT
 
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.set_header('Content-Type', 'text/html')
-        self.render('templates/index.html', title='%s %s' % (settings.NAME, settings.VERSION), version=settings.VERSION)
+handlers = [
+]
 
-application = tornado.web.Application([
-    (r"/", MainHandler),
-], debug=settings.DEBUG)
+settings = dict(
+)
 
 if __name__ == '__main__':
-    application.listen(settings.PORT)
-    tornado.ioloop.IOLoop.instance().start()
+    define('port', default=DEFAULT_PORT, help='port', type=int)
+    define('debug', default=False, help='debug', type=bool)
+    parse_command_line()
+
+    settings['debug'] = options.debug
+    application = Application(handlers, **settings)
+    http_server = HTTPServer(application, xheaders=True)
+    http_server.listen(options.port)
+    logging.info('Listen on %d, debug=%s' % (options.port, options.debug))
+
+    IOLoop.instance().start()
