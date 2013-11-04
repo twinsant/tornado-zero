@@ -12,9 +12,11 @@
 		<link href="{{ static_url('css/styles.css') }}" rel="stylesheet" media="screen">
 	</head>
 	<body>
-        <div class="container">
+        <div id="container">
         </div><!-- /container -->
         <script src="{{ static_url('js/jquery-1.8.3.min.js') }}"></script>
         <script src="{{ static_url('bootstrap-3.0.0/js/bootstrap.min.js') }}"></script>
+        {% block extra_script %}
+        {% end %}
 	</body>
 </html>
