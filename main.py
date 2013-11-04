@@ -1,4 +1,5 @@
 import logging
+import os
 
 from tornado.options import define
 from tornado.options import options
@@ -14,6 +15,11 @@ handlers = [
 ]
 
 settings = dict(
+    template_path = os.path.join(os.path.dirname(__file__), "templates"),
+    static_path = os.path.join(os.path.dirname(__file__), "static"),
+    xsrf_cookies = True,
+    cookie_secret = 'openssl rand 32 -base64',
+    # Other settings
 )
 
 if __name__ == '__main__':
