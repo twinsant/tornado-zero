@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 from tornado.options import define
 from tornado.options import options
@@ -9,7 +10,12 @@ from tornado.web import URLSpec
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-from local_conf import DEFAULT_PORT
+try:
+    from local_conf import DEFAULT_PORT
+except ImportError:
+    logging.error('Please setup a local config file: cp local_conf.py.sample local_conf.py')
+    sys.exit(-1)
+
 from handlers.base import IndexHandler
 
 handlers = [
