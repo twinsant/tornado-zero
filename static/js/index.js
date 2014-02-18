@@ -4,12 +4,18 @@ require.config({
 
 define([
     'views/demo'
+    , 'views/auth'
+    , 'views/login'
 ], function(
     DemoView
+    , AuthView
+    , LoginView
 ){
     var AppRouter = Backbone.Router.extend({
         routes: {
             'demo':'demo'
+            , 'auth':'auth'
+            , 'login':'login'
             , '*other':'defaultRoute'
         }
         ,initialize: function(){
@@ -17,6 +23,16 @@ define([
         ,demo: function(){
             //ga('send', 'pageview', '/demo');
             this.view = new DemoView();
+            this.render();
+        }
+        , auth: function() {
+            this.view = new AuthView();
+            this.view.router = this;
+            this.render();
+        }
+        , login: function() {
+            this.view = new LoginView();
+            this.view.router = this;
             this.render();
         }
         ,defaultRoute: function(other){

@@ -17,9 +17,12 @@ except ImportError:
     sys.exit(-1)
 
 from handlers.base import IndexHandler
+from handlers.base import APIUserHandler
 
 handlers = [
     URLSpec('/', IndexHandler, name='index'),
+
+    URLSpec('/api/user', APIUserHandler, name='api_user'),
 ]
 
 settings = dict(
