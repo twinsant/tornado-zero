@@ -8,7 +8,8 @@ define([
         , getCurrentUser: function() {
             var me = this;
             $.get('/api/user').done(function(data){
-                console.log(data);
+                me.router.user = data;
+                me.router.navigate('dashboard', true);
             }).fail(function(jqXHR, textStatus, errorThrown){
                 if (jqXHR.status==403){
                     me.router.navigate('login', true);

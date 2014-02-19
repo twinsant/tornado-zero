@@ -6,16 +6,19 @@ define([
     'views/demo'
     , 'views/auth'
     , 'views/login'
+    , 'views/dashboard'
 ], function(
     DemoView
     , AuthView
     , LoginView
+    , DashboardView
 ){
     var AppRouter = Backbone.Router.extend({
         routes: {
             'demo':'demo'
             , 'auth':'auth'
             , 'login':'login'
+            , 'dashboard':'dashboard'
             , '*other':'defaultRoute'
         }
         ,initialize: function(){
@@ -32,6 +35,11 @@ define([
         }
         , login: function() {
             this.view = new LoginView();
+            this.view.router = this;
+            this.render();
+        }
+        , dashboard: function() {
+            this.view = new DashboardView();
             this.view.router = this;
             this.render();
         }
