@@ -7,6 +7,7 @@ define([
         tpl: _.template(template)
         , getCurrentUser: function() {
             var me = this;
+            console.log(session)
             
             $.get('/api/user').done(function(data){
                 me.router.navigate('dashboard', true);
