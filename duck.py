@@ -3,5 +3,5 @@ def user_auth(aid, password):
 	return None
 
 def user_auth_token(token):
-	return {'id':1}
+	return {'id':1, 'name':'Admin'}
 	return None

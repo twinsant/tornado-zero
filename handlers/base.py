@@ -8,9 +8,7 @@ from duck import *
 class BaseHandler(RequestHandler):
     def get_current_user(self):
         token = self.get_secure_cookie('token')
-        if token:
-            self.current_user = user_auth_token(token)
-        return self.current_user
+        return token
 
 class IndexHandler(BaseHandler):
     def get(self):
@@ -56,4 +54,10 @@ class APIUserAuthHandler(APIHandler):
         if token is None:
             raise HTTPError(403)
         self.set_secure_cookie('token', token)
-        self.write({'token':token})
+        data = user_auth_token(token)
+        self.write(data)
+
+class APIUserLogoutHandler(APIHandler):
+    def post(self):
+        self.clear_cookie('token')
+        self.write({})

@@ -19,6 +19,7 @@ define([
             , 'auth':'auth'
             , 'login':'login'
             , 'dashboard':'dashboard'
+            , 'logout':'logout'
             , '*other':'defaultRoute'
         }
         ,initialize: function(){
@@ -42,6 +43,12 @@ define([
             this.view = new DashboardView();
             this.view.router = this;
             this.render();
+        }
+        , logout: function() {
+            var me = this;
+            $.post('/api/user/logout').done(function(){
+                me.navigate('demo', true);
+            });
         }
         ,defaultRoute: function(other){
         }

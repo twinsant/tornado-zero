@@ -31,8 +31,9 @@ define([
                 var inputPassword = this.$('input[type=password]');
                 var aid = $.trim(this.$('input[type=tel]').attr('value'));
                 var password = $.trim(inputPassword.attr('value'));
-                $.post('/api/user/auth', {'aid':aid, 'password': password}).done(function(user){
-                    console.log(user)
+                $.post('/api/user/auth', {'aid':aid, 'password': password}).done(function(data){
+                    window.user = data;
+                    me.router.navigate('dashboard', true);
                 }).fail(function(jqXHR, textStatus, errorThrown){
                     if (jqXHR.status==403){
                         alert.show(afterTag, 'Maybe wrong password');
