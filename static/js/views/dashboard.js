@@ -4,7 +4,9 @@ define([
     var View = Backbone.View.extend({
         tpl: _.template(template)
         , render: function(){
-            this.$el.html(this.tpl({'name':window.user.name}));
+        	// FIXME: window user lost after refresh
+        	var name = 'Admin';//window.user.name;
+            this.$el.html(this.tpl({'name':name}));
             return this;
         }
     });

@@ -7,8 +7,8 @@ define([
         tpl: _.template(template)
         , getCurrentUser: function() {
             var me = this;
+            
             $.get('/api/user').done(function(data){
-                me.router.user = data;
                 me.router.navigate('dashboard', true);
             }).fail(function(jqXHR, textStatus, errorThrown){
                 if (jqXHR.status==403){

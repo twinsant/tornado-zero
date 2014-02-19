@@ -60,9 +60,8 @@ define([
             return this;
         }
     });
-    
-    var router = new AppRouter();
-    Backbone.history.start();
 
+    Backbone.history.start();
+    var router = new AppRouter();
     router.navigate('demo', true);
 });
