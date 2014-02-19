@@ -6,7 +6,11 @@ from tornado.web import HTTPError
 from duck import *
 
 class BaseHandler(RequestHandler):
-    pass
+    def get_current_user(self):
+        token = self.get_secure_cookie('token')
+        if token:
+            self.current_user = user_auth_token(token)
+        return self.current_user
 
 class IndexHandler(BaseHandler):
     def get(self):
@@ -16,7 +20,7 @@ def api_authenticated(method):
     """Decorate api methods with this to require that the user be logged in."""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
-        if not self.current_user:
+        if not self.get_current_user():
             raise HTTPError(403)
         return method(self, *args, **kwargs)
     return wrapper
@@ -38,7 +42,7 @@ class APIHandler(BaseHandler):
 class APIUserHandler(APIHandler):
     @api_authenticated
     def get(self):
-        self.write({})
+        self.write(self.current_user)
 
 class APIUserAuthHandler(APIHandler):
     def post(self):
