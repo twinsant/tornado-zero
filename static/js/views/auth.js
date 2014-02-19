@@ -7,9 +7,13 @@ define([
         tpl: _.template(template)
         , getCurrentUser: function() {
             var me = this;
-            console.log(session)
+
+            var s = session.get('current');
+            console.log(s)
             
             $.get('/api/user').done(function(data){
+                data.id = 'current';
+                session.create(data);
                 me.router.navigate('dashboard', true);
             }).fail(function(jqXHR, textStatus, errorThrown){
                 if (jqXHR.status==403){
