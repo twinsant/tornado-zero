@@ -39,6 +39,9 @@ define([
         }
         , render: function() {
             $('#container').html(this.view.render().el);
+            if (this.view.afterRendered) {
+                this.view.afterRendered();
+            }
             return this;
         }
     });

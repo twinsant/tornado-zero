@@ -1,6 +1,8 @@
 define([
     'text!templates/auth.html'
-], function(template){
+], function(
+    template
+){
     var View = Backbone.View.extend({
         tpl: _.template(template)
         , getCurrentUser: function() {
