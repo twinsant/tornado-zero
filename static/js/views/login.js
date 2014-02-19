@@ -20,19 +20,26 @@ define([
             'click button#loginButton':'onLogin'
         }
         , onLogin: function(e) {
+            var me = this;
+            var alert = new AlertView();
+            alert.clean();
+            var afterTag = '#loginButton';
+
             if (this.$('#login').parsley('validate')) {
                 // TODO: parsley should trim whitespaces
                 // TODO: use bootstrap validation states and icons
+                var inputPassword = this.$('input[type=password]');
                 var aid = $.trim(this.$('input[type=tel]').attr('value'));
-                var password = $.trim(this.$('input[type=password]').attr('value'));
+                var password = $.trim(inputPassword.attr('value'));
                 $.post('/api/user/auth', {'aid':aid, 'password': password}).done(function(user){
                     console.log(user)
                 }).fail(function(jqXHR, textStatus, errorThrown){
                     if (jqXHR.status==403){
-                        console.log('parsley error')
+                        alert.show(afterTag, 'Maybe wrong password');
+                        inputPassword.attr('value', '');
+                        inputPassword.focus();
                     }else{
-                        var alert = new AlertView();
-                        alert.show('#login h2', jqXHR.status + ' ' + errorThrown);
+                        alert.show(afterTag, jqXHR.status + ' ' + errorThrown);
                     }
                 });
             }

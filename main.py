@@ -18,11 +18,13 @@ except ImportError:
 
 from handlers.base import IndexHandler
 from handlers.base import APIUserHandler
+from handlers.base import APIUserAuthHandler
 
 handlers = [
     URLSpec('/', IndexHandler, name='index'),
 
     URLSpec('/api/user', APIUserHandler, name='api_user'),
+    URLSpec('/api/user/auth', APIUserAuthHandler, name='api_user_auth'),
 ]
 
 settings = dict(
