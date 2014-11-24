@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block extra_script %}
+    <script src="{{ static_url('js/underscore-min.js') }}"></script>
+    <script src="{{ static_url('js/backbone-min.js') }}"></script>
+    <script src="{{ static_url('js/backbone.localStorage-min.js') }}"></script>
+    <script src="{{ static_url('js/models/session.js') }}"></script>
+
+    <script type="text/javascript">
+    	var session = new SessionManager();
+    </script>
+    <script data-main="{{ static_url("js/index.js?bust=1") }}" src="{{ static_url("js/require.js") }}"></script>
+{% end %}

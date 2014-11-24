@@ -1,17 +1,65 @@
+import logging
 import functools
 
 from tornado.web import RequestHandler
 from tornado.web import HTTPError
+from tornado.web import asynchronous
 
 from duck import *
 
 class BaseHandler(RequestHandler):
+    def initialize(self, db):
+        if db:
+            logging.debug('db ready')
+            self.db = db
+
+    # def prepare(self):
+    #     # finish or redirect
+    #     pass
+
+    # def on_finish(self):
+    #     pass
+
+    # def on_connection_close:
+    #     pass
+
+    # def get_user_locale:
+    #     pass
+
+    def set_default_headers(self):
+        self.set_header('Server', '')
+
     def get_current_user(self):
         token = self.get_secure_cookie('token')
         return token
 
+    # def write_error(self, exc_info):
+    #     # HTTPError 
+    #     traceback.format_exception
+
+    # default_handler_class for 404
+    # prepare
+
+    def get_template_namespace(self):
+        namespace = super(BaseHandler, self).get_template_namespace()
+        namespace.update(dict(debug=self.settings['debug']))
+        return namespace
+
+    # def stream_request_body(self):
+    #     pass
+
+    # def data_received(self, data):
+    #     pass
+
 class IndexHandler(BaseHandler):
+    @asynchronous
     def get(self):
+        # self.request
+        # - get_query_argument(s)
+        # - get_body_argument(s)
+        # - files: {filename:, content_type:, body:} stream_request_body
+
+        # prepare
         self.render('index.html')
 
 def api_authenticated(method):
@@ -53,7 +101,7 @@ class APIUserAuthHandler(APIHandler):
         token = user_auth(aid, password)
         if token is None:
             raise HTTPError(403)
-        self.set_secure_cookie('token', token)
+        self.set_secure_cookie('token', token, expire_days=30)
         data = user_auth_token(token)
         self.write(data)
 

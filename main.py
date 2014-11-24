@@ -22,7 +22,8 @@ from handlers.base import APIUserAuthHandler
 from handlers.base import APIUserLogoutHandler
 
 handlers = [
-    URLSpec('/', IndexHandler, name='index'),
+    # First matching is used, with initialize arguments
+    URLSpec('/', IndexHandler, dict(db='YOUR DB'), name='index'), # reserve_url
 
     URLSpec('/api/user', APIUserHandler, name='api_user'),
     URLSpec('/api/user/auth', APIUserAuthHandler, name='api_user_auth'),
@@ -35,6 +36,7 @@ settings = dict(
     xsrf_cookies = True,
     cookie_secret = 'openssl rand 32 -base64',
     # Other settings
+    login_url = '/login',
 )
 
 if __name__ == '__main__':

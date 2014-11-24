@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block extra_script %}
-    <script src="{{ static_url('js/underscore-min.js') }}"></script>
-    <script src="{{ static_url('js/backbone-min.js') }}"></script>
-    <script src="{{ static_url('js/backbone.localStorage-min.js') }}"></script>
-    <script src="{{ static_url('js/models/session.js') }}"></script>
+{% block content %}
+<h1>{% raw linkify('Demo http://example.com/demo')%}</h1>
 
-    <script type="text/javascript">
-    	var session = new SessionManager();
-    </script>
-    <script data-main="{{ static_url("js/index.js?bust=1") }}" src="{{ static_url("js/require.js") }}"></script>
+<h1>Release notes</h1>
+<ul>
+    <h2>1.0.141124</h2>
+    <li>Chg: new index page.</li>
+    <li>Chg: upgrade Tornado to 4.0.2</li>
+    <li>Chg: upgrade Bootstrap to 3.3.1</li>
+</ul>
 {% end %}
