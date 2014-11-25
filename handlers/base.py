@@ -51,6 +51,10 @@ class BaseHandler(RequestHandler):
     # def data_received(self, data):
     #     pass
 
+    # tornado.httputil
+    # - url_concat
+    # - format_timestamp
+
 class IndexHandler(BaseHandler):
     @asynchronous
     def get(self):
